@@ -7,12 +7,12 @@ function App() {
 
   return (
     <>
-      <GlobalStyled/>
-      <AuthProvider>
       <GlobalProvider>
-        <RoutesMain/>
+        <GlobalStyled />
+        <AuthProvider>
+          <RoutesMain />
+        </AuthProvider>
       </GlobalProvider>
-      </AuthProvider>
     </>
   )
 }

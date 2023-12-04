@@ -7,3 +7,9 @@ export const useAuth=() => {
 
     return authContext
 }
+
+export const newUser=() => {
+    const authContext = useContext(AuthContext)
+
+    return authContext
+}

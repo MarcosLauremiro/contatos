@@ -2,6 +2,7 @@ import { ReactNode, createContext } from "react";
 import { LoginData } from "../pages/Login/LoginSchema";
 import { api } from "../service/api";
 import { useNavigate } from "react-router-dom";
+import { RegisterData } from "../pages/Register/RegisterSchema";
 
 export interface AuthProps {
     children: ReactNode
@@ -9,7 +10,8 @@ export interface AuthProps {
 
 export interface AuthContext {
     signIn: (data: LoginData) => void
-}
+    newUser: (data: RegisterData) => void
+} 
 
 export const AuthContext = createContext<AuthContext>({} as AuthContext)
 
@@ -31,8 +33,20 @@ export const AuthProvider = ({ children }: AuthProps) => {
         }
     }
 
+    const newUser = async (formData: RegisterData) => {
+        const { confirmPassword, ...newFormdata } = formData
+
+        try {
+            const { data } = await api.post('/users', newFormdata)
+            localStorage.setItem('token', data.accessToken)
+            navigate('contatos')
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{ signIn }}>
+        <AuthContext.Provider value={{ signIn, newUser }}>
             {children}
         </AuthContext.Provider>
     )

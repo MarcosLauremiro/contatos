@@ -2,19 +2,19 @@ import { useForm } from "react-hook-form"
 import { RegisterData, RegisterSchema } from "./RegisterSchema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {DivFormStyle} from "./style"
-import { useContext } from 'react';
-import { GlobalContext } from "../../provider/GlobalProvider";
+import { useAuth } from "../../hooks/useAuth"
 
 function Register () {
+
+    const { newUser } = useAuth()
 
     const { register, handleSubmit, formState:{errors}} = useForm<RegisterData>(
         {
             resolver: zodResolver(RegisterSchema)
     })
-
-    const {newUser} = useContext(GlobalContext)
-
+    console.log(errors)
     const submit = (data: RegisterData) => {
+        console.log(data)
         newUser(data)
     }
     return (
