@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
         try {
             const { data } = await api.post('/users', newFormdata)
             localStorage.setItem('token', data.accessToken)
-            navigate('contatos')
+            navigate('/')
         } catch (error) {
             console.log(error)
         }

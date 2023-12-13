@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const DivFormStyle = styled.div`
   display: flex;
   justify-content: center;
-  height: 100vh;
   font-family: 'Roboto Mono', monospace;
 
   form {
@@ -14,11 +13,27 @@ export const DivFormStyle = styled.div`
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-    span {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 10px;
+    .header-form{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      span {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      button{
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
+
 
     .input-container {
       margin-bottom: 15px;
@@ -80,15 +95,31 @@ export const ContactListStyle = styled.div`
       border: 1px solid #ddd;
       border-radius: 4px;
 
-      p {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      div{
+        p {
+          font-size: 18px;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+  
+        span {
+          display: block;
+          color: #555;
+        }
       }
-
-      span {
-        display: block;
-        color: #555;
+      .buttons{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        button{
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+        }
       }
     }
   }

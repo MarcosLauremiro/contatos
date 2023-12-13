@@ -1,20 +1,22 @@
-import { AuthProvider } from "./provider/AuthProvider"
-import { GlobalContext, GlobalProvider } from "./provider/GlobalProvider"
-import RoutesMain from "./routes/routesMain"
-import { GlobalStyled } from "./styles/Globaltyle"
+import { AuthProvider } from "./provider/AuthProvider";
+import { ContactContext, ContactProvider } from "./provider/ContactProvider";
+import { GlobalProvider } from "./provider/GlobalContext";
+import RoutesMain from "./routes/routesMain";
+import { GlobalStyled } from "./styles/Globaltyle";
 
 function App() {
-
   return (
     <>
       <GlobalProvider>
         <GlobalStyled />
         <AuthProvider>
-          <RoutesMain />
+          <ContactProvider>
+            <RoutesMain />
+          </ContactProvider>
         </AuthProvider>
       </GlobalProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -12,7 +12,6 @@ function Register () {
         {
             resolver: zodResolver(RegisterSchema)
     })
-    console.log(errors)
     const submit = (data: RegisterData) => {
         console.log(data)
         newUser(data)
