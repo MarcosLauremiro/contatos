@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { ContactContext } from "../../provider/ContactProvider";
 import { ContactListStyle, DivFormStyle } from "./style";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ContactData, ContactSchema } from "./ContactShema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GlobalContext } from "../../provider/GlobalContext";
@@ -9,10 +9,25 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import { IoIosLogOut } from "react-icons/io";
 import { Modal } from "./Modal";
+import { RiProfileLine } from "react-icons/ri";
+import { Profile } from "./Perfil";
+import { UserContext } from "../../provider/UserProvider";
 
 function Contact() {
-  const { listContact, logout, setIsOpen, isOpen, setSelectContact } = useContext(GlobalContext);
+  const {
+    listContact,
+    logout,
+    setIsOpen,
+    isOpen,
+    setSelectContact,
+    setIsOpenProfile,
+    isOpenProfile,
+  } = useContext(GlobalContext);
   const { saveContact, deleteContact } = useContext(ContactContext);
+
+  const { SeeProfile } = useContext(UserContext);
+
+  const email = localStorage.getItem("userEmail");
 
   const {
     register,
@@ -28,18 +43,32 @@ function Contact() {
   return (
     <>
       {isOpen ? <Modal /> : null}
+      {isOpenProfile ? <Profile /> : null}
       <DivFormStyle>
         <form onSubmit={handleSubmit(submit)}>
           <div className="header-form">
             <span>Criar contato</span>
-            <button
-              onClick={(event) => {
-                event.preventDefault();
-                logout();
-              }}
-            >
-              <IoIosLogOut size="20" />
-            </button>
+            <div className="buttons-header">
+              <button
+                title="perfil"
+                onClick={(event) => {
+                  event.preventDefault();
+                  setIsOpenProfile(true);
+                  SeeProfile(email!);
+                }}
+              >
+                <RiProfileLine size="20" />
+              </button>
+              <button
+                onClick={(event) => {
+                  event.preventDefault();
+                  logout();
+                }}
+                title="sair"
+              >
+                <IoIosLogOut size="20" />
+              </button>
+            </div>
           </div>
           <div className="input-container">
             <label htmlFor="name">Nome</label>
@@ -80,7 +109,7 @@ function Contact() {
                   </button>
                   <button
                     onClick={() => {
-                      setSelectContact(contact)
+                      setSelectContact(contact);
                       setIsOpen(true);
                     }}
                   >

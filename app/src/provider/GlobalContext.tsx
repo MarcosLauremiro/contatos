@@ -20,8 +20,10 @@ export interface IGlobalContext {
   logout: () => Promise<void>;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  selectContact: IListContact | null
-  setSelectContact: React.Dispatch<React.SetStateAction<IListContact | null>>
+  selectContact: IListContact | null;
+  setSelectContact: React.Dispatch<React.SetStateAction<IListContact | null>>;
+  isOpenProfile: boolean;
+  setIsOpenProfile: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const GlobalContext = createContext({} as IGlobalContext);
@@ -31,9 +33,10 @@ const TOKEN = localStorage.getItem("token");
 export const GlobalProvider = ({ children }: ContactProps) => {
   const [listContact, setListContact] = useState<IListContact[]>([]);
 
-  const [selectContact, setSelectContact] = useState<IListContact| null>(null);
+  const [selectContact, setSelectContact] = useState<IListContact | null>(null);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenProfile, setIsOpenProfile] = useState(false);
 
   const navigate = useNavigate();
 
@@ -53,6 +56,7 @@ export const GlobalProvider = ({ children }: ContactProps) => {
   const logout = async () => {
     localStorage.clear;
     navigate("/");
+    localStorage.clear();
   };
   return (
     <GlobalContext.Provider
@@ -64,7 +68,9 @@ export const GlobalProvider = ({ children }: ContactProps) => {
         isOpen,
         setIsOpen,
         selectContact,
-        setSelectContact
+        setSelectContact,
+        isOpenProfile,
+        setIsOpenProfile,
       }}
     >
       {children}

@@ -1,11 +1,23 @@
 import styled from "styled-components";
 
-export const DivFormStyle = styled.div`
+export const StyleProfile = styled.div`
+  display: flex;
+  justify-content: center;
   font-family: "Roboto Mono", monospace;
+
+  position: fixed;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  inset: 0;
+
+  width: 100%;
   height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+
+  z-index: 10;
 
   form {
     max-width: 400px;
@@ -14,12 +26,27 @@ export const DivFormStyle = styled.div`
     background-color: #f5f5f5;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    span {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
+    .header-form {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      span {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .buttons-header {
+        button {
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
 
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
     .input-container {
       margin-bottom: 15px;
 
@@ -35,7 +62,6 @@ export const DivFormStyle = styled.div`
         border-radius: 4px;
       }
     }
-
     .buttons {
       display: flex;
       justify-content: space-between;
@@ -46,8 +72,8 @@ export const DivFormStyle = styled.div`
         border-radius: 4px;
         cursor: pointer;
 
-        &.login {
-          background-color: #3498db;
+        &.delete {
+          background-color: red;
           color: #fff;
         }
 

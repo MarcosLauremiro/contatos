@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const StyleModal = styled.div`
   display: flex;
   justify-content: center;
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
 
   position: fixed;
 
@@ -47,14 +47,16 @@ export const StyleModal = styled.div`
           font-weight: bold;
           margin-bottom: 10px;
         }
-        button {
-          background-color: transparent;
-          border: none;
-          cursor: pointer;
+        .buttons-header {
+          button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
 
-          display: flex;
-          align-items: center;
-          justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
         }
       }
     }

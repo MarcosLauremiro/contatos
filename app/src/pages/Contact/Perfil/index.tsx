@@ -1,48 +1,54 @@
-import { useForm } from "react-hook-form";
-import { ContactData, ContactSchema } from "../ContactShema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
+import { StyleProfile } from "./style";
+import { UserContext } from "../../../provider/UserProvider";
 import { GlobalContext } from "../../../provider/GlobalContext";
-import { StyleModal } from "./style";
 import { IoIosLogOut } from "react-icons/io";
-import { ContactContext } from "../../../provider/ContactProvider";
-import { ImProfile } from "react-icons/im";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ProfileData, ProfileSchema } from "./ProfilelSchema";
 
-export const Modal = () => {
-  const { setIsOpen, selectContact } = useContext(GlobalContext);
-  const { editeContact } = useContext(ContactContext);
+export const Profile = () => {
+  const { setIsOpenProfile } = useContext(GlobalContext);
+  const { deleteProfile, editeProfile, user } = useContext(UserContext);
+
+  console.log(user, 'login');
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ContactData>({
-    resolver: zodResolver(ContactSchema),
+  } = useForm<ProfileData>({
+    resolver: zodResolver(ProfileSchema),
   });
 
-  const submit = (formdata: ContactData) => {
-    editeContact(formdata, selectContact?.id!);
-    setIsOpen(false);
+  console.log(errors, 'erro form');
+
+  const submit = (data: ProfileData) => {
+    editeProfile(data, user?.id!);
   };
+
   return (
-    <StyleModal>
-      <div className="modal-container">
+    <>
+      <StyleProfile>
         <form onSubmit={handleSubmit(submit)}>
           <div className="header-form">
-            <span>Criar contato</span>
+            <span>Perfil de usuario</span>
+            <div className="buttons-header">
               <button
                 onClick={(event) => {
                   event.preventDefault();
-                  setIsOpen(false);
+                  setIsOpenProfile(false);
                 }}
+                title="sair"
               >
                 <IoIosLogOut size="20" />
               </button>
+            </div>
           </div>
           <div className="input-container">
             <label htmlFor="name">Nome</label>
             <input
-              defaultValue={selectContact?.name}
+              defaultValue={user?.name}
               type="text"
               id="name"
               required
@@ -52,7 +58,7 @@ export const Modal = () => {
           <div className="input-container">
             <label htmlFor="email">E-mail</label>
             <input
-              defaultValue={selectContact?.email}
+              defaultValue={user?.email}
               type="email"
               id="email"
               required
@@ -62,20 +68,29 @@ export const Modal = () => {
           <div className="input-container">
             <label htmlFor="telefone">Telefone</label>
             <input
-              defaultValue={selectContact?.fone}
+              defaultValue={user?.fone}
               type="tel"
               id="telefone"
-              {...register("fone")}
               required
+              {...register("fone")}
             />
           </div>
           <div className="buttons">
             <button type="submit" className="register">
-              Editar contato
+              Editar perfil
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                deleteProfile(user?.id!);
+              }}
+              className="delete"
+            >
+              Excluir perfil
             </button>
           </div>
         </form>
-      </div>
-    </StyleModal>
+      </StyleProfile>
+    </>
   );
 };

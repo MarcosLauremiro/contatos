@@ -3,51 +3,73 @@ import { LoginData } from "../pages/Login/LoginSchema";
 import { api } from "../service/api";
 import { useNavigate } from "react-router-dom";
 import { RegisterData } from "../pages/Register/RegisterSchema";
+import { toast } from "react-toastify";
 
 export interface AuthProps {
-    children: ReactNode
+  children: ReactNode;
 }
 
 export interface AuthContext {
-    signIn: (data: LoginData) => void
-    newUser: (data: RegisterData) => void
-} 
+  signIn: (data: LoginData) => void;
+  newUser: (data: RegisterData) => void;
+}
 
-export const AuthContext = createContext<AuthContext>({} as AuthContext)
+export const AuthContext = createContext<AuthContext>({} as AuthContext);
 
 export const AuthProvider = ({ children }: AuthProps) => {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate()
+  const signIn = async (data: LoginData) => {
+    try {
+      const response = await api.post("/login", data);
+      const { token } = response.data;
 
-    const signIn = async (data: LoginData) => {
-        try {
-
-            const response = await api.post("/login", data)
-            const { token } = response.data
-
-            api.defaults.headers.common.Authorization = `Bearer ${token}`
-            localStorage.setItem("token", token)
-            navigate("contatos")
-        } catch (error) {
-            console.log(error)
-        }
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+      localStorage.setItem("userEmail", data.email);
+      localStorage.setItem("token", token);
+      toast.success("login realizado com sucesso", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setTimeout(() => {
+        navigate('contatos')
+      }, 1000)
+    } catch (error) {
+      toast.error("Não foi possível realizar o login", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      console.log(error);
     }
+  };
 
-    const newUser = async (formData: RegisterData) => {
-        const { confirmPassword, ...newFormdata } = formData
+  const newUser = async (formData: RegisterData) => {
+    const { confirmPassword, ...newFormdata } = formData;
 
-        try {
-            const { data } = await api.post('/users', newFormdata)
-            localStorage.setItem('token', data.accessToken)
-            navigate('/')
-        } catch (error) {
-            console.log(error)
-        }
+    try {
+      const { data } = await api.post("/users", newFormdata);
+      localStorage.setItem("token", data.accessToken);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    return (
-        <AuthContext.Provider value={{ signIn, newUser }}>
-            {children}
-        </AuthContext.Provider>
-    )
-}
+  return (
+    <AuthContext.Provider value={{ signIn, newUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};

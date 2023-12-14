@@ -13,7 +13,6 @@ function Register () {
             resolver: zodResolver(RegisterSchema)
     })
     const submit = (data: RegisterData) => {
-        console.log(data)
         newUser(data)
     }
     return (
@@ -42,7 +41,7 @@ function Register () {
                     {errors.confirmPassword?.message}
                 </div>
                 <div className="buttons">
-                    <button className="login">logar</button>
+                    <button onClick={(event) => { event.preventDefault(); window.location.href = 'http://localhost:5173/' }} className="login">logar</button>
                     <button type="submit" className="register">Registrar</button>
                 </div>
             </form>

@@ -3,9 +3,8 @@ import { LoginData, loginSchema } from "./LoginSchema"
 import { DivFormStyle } from "./style"
 import { useForm } from "react-hook-form"
 import { useAuth } from "../../hooks/useAuth"
-import Contact from "../Contact"
 import { useContext } from "react"
-import { GlobalContext, GlobalProvider } from "../../provider/GlobalContext"
+import { GlobalContext} from "../../provider/GlobalContext"
 
 const Login = () => {
     const {contacts} = useContext(GlobalContext)
@@ -16,7 +15,6 @@ const Login = () => {
         {
             resolver: zodResolver(loginSchema)
         })
-        // console.log(errors)
     const submit = (data: LoginData) => {
         signIn(data)
         contacts()

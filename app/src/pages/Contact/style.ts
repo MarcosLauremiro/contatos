@@ -23,14 +23,17 @@ export const DivFormStyle = styled.div`
         font-weight: bold;
         margin-bottom: 10px;
       }
-      button{
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-
+      .buttons-header{
         display: flex;
-        align-items: center;
-        justify-content: center;
+        button{
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+  
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
       }
     }
 
