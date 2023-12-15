@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
       localStorage.setItem("userEmail", data.email);
       localStorage.setItem("token", token);
-      toast.success("login realizado com sucesso", {
+      toast.success("Login realizado com sucesso", {
         position: "top-right",
         autoClose: 1000,
         hideProgressBar: false,
@@ -61,8 +61,30 @@ export const AuthProvider = ({ children }: AuthProps) => {
     try {
       const { data } = await api.post("/users", newFormdata);
       localStorage.setItem("token", data.accessToken);
-      navigate("/");
+      toast.success("Registro realizado com sucesso", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setTimeout(() => {
+        navigate('/')
+      }, 1000)
     } catch (error) {
+      toast.error("Não foi possível realizar o Registro", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       console.log(error);
     }
   };
